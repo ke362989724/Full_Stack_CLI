@@ -12,19 +12,27 @@ function Post() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
-      setPostObject(response.data);
-    });
+    axios
+      .get(
+        `https://full-stack-tutorial-ke36298972.herokuapp.com/posts/byId/${id}`
+      )
+      .then((response) => {
+        setPostObject(response.data);
+      });
 
-    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
-      setComments(response.data);
-    });
+    axios
+      .get(
+        `https://full-stack-tutorial-ke36298972.herokuapp.com/comments/${id}`
+      )
+      .then((response) => {
+        setComments(response.data);
+      });
   }, []);
 
   const addComment = () => {
     axios
       .post(
-        "http://localhost:3001/comments",
+        "https://full-stack-tutorial-ke36298972.herokuapp.com/comments",
         {
           commentBody: newComment,
           PostId: id,
@@ -51,9 +59,12 @@ function Post() {
 
   const deleteComment = (id) => {
     axios
-      .delete(`http://localhost:3001/comments/${id}`, {
-        headers: { accessToken: localStorage.getItem("accessToken") },
-      })
+      .delete(
+        `https://full-stack-tutorial-ke36298972.herokuapp.com/comments/${id}`,
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      )
       .then(() => {
         setComments(
           comments.filter((val) => {
@@ -65,9 +76,12 @@ function Post() {
 
   const deletePost = (id) => {
     axios
-      .delete(`http://localhost:3001/posts/${id}`, {
-        headers: { accessToken: localStorage.getItem("accessToken") },
-      })
+      .delete(
+        `https://full-stack-tutorial-ke36298972.herokuapp.com/posts/${id}`,
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      )
       .then(() => {
         navigate("/");
       });
@@ -77,7 +91,7 @@ function Post() {
     if (option === "title") {
       let newTitle = prompt("Enter New Title:");
       axios.put(
-        "http://localhost:3001/posts/title",
+        "https://full-stack-tutorial-ke36298972.herokuapp.com/posts/title",
         {
           newTitle: newTitle,
           id: id,
@@ -91,7 +105,7 @@ function Post() {
     } else {
       let newPostText = prompt("Enter New Text:");
       axios.put(
-        "http://localhost:3001/posts/postText",
+        "https://full-stack-tutorial-ke36298972.herokuapp.com/posts/postText",
         {
           newText: newPostText,
           id: id,
@@ -113,22 +127,13 @@ function Post() {
             className="title"
             onClick={() => {
               if (authState.username === postObject.username) {
-                editPost("title");
-              }
-            }}
-          >
-            {postObject.title}
-          </div>
-          <div
-            className="body"
-            onClick={() => {
-              if (authState.username === postObject.username) {
                 editPost("body");
               }
             }}
           >
             {postObject.postText}
           </div>
+          <div className="body">{postObject.postText}</div>
           <div className="footer">
             {postObject.username}
             {authState.username === postObject.username && (

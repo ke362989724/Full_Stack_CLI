@@ -15,9 +15,11 @@ function Registration() {
   });
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/auth", data).then(() => {
-      console.log(data);
-    });
+    axios
+      .post("https://full-stack-tutorial-ke36298972.herokuapp.com/auth", data)
+      .then(() => {
+        console.log(data);
+      });
   };
 
   return (
