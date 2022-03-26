@@ -22,7 +22,7 @@ function Profile() {
 
     axios
       .get(
-        `https://full-stack-tutorial-ke36298972.herokuapp.com/byuserId/${id}`
+        `https://full-stack-tutorial-ke36298972.herokuapp.com/posts/byuserId/${id}`
       )
       .then((response) => {
         setListOfPosts(response.data);
